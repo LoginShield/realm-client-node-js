@@ -1,0 +1,55 @@
+{
+  "name": "@cryptium/loginshield-realm-client-node",
+  "version": "1.0.0",
+  "description": "Use the LoginShield Realm Client to manage and authenticate users with LoginShield",
+  "main": "dist/main.umd.js",
+  "module": "src/main",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "clean": "exit 0",
+    "build": "rollup src/main.js --file dist/main.umd.js --format umd --name LoginShield-Realm-Client",
+    "lint": "eslint --fix src/**",
+    "deps": "exit 0",
+    "pkg": "exit 0",
+    "start": "exit 0",
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cryptiumtech/loginshield-realm-client-node-js.git"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "keywords": [
+    "cryptium",
+    "loginshield",
+    "enterprise",
+    "sdk"
+  ],
+  "author": "Cryptium <someone@cryptium.org> (https://cryptium.com)",
+  "contributors": [
+    "Jonathan Buhacoff <jonathan@cryptium.org>"
+  ],
+  "bugs": {
+    "url": "https://github.com/cryptiumtech/loginshield-realm-client-node-js/issues"
+  },
+  "homepage": "https://github.com/cryptiumtech/loginshield-realm-client-node-js#readme",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "axios": "^0.19.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@cryptium/util-commitlint-config": "^1.0.2",
+    "@cryptium/util-commitlint-config-type-enum": "^1.0.2",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "husky": "^3.0.8",
+    "rollup": "^1.25.2"
+  }
+}
