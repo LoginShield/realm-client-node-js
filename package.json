@@ -1,7 +1,7 @@
 {
   "name": "@cryptium/loginshield-realm-client-node",
   "version": "1.0.0",
-  "description": "Use the LoginShield Realm Client to manage and authenticate users with LoginShield",
+  "description": "Implements service portion of LoginShield authentication realm",
   "main": "dist/main.umd.js",
   "module": "src/main",
   "files": [
