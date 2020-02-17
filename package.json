@@ -1,7 +1,7 @@
 {
-  "name": "@cryptium/loginshield-realm-client-node",
+  "name": "@cryptium/tigercomet-realm-client-node",
   "version": "1.0.0",
-  "description": "Implements service portion of LoginShield authentication realm",
+  "description": "Service integration for authentication realm",
   "main": "dist/main.umd.js",
   "module": "src/main",
   "files": [
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "clean": "exit 0",
-    "build": "rollup src/main.js --file dist/main.umd.js --format umd --name LoginShield-Realm-Client",
+    "build": "rollup src/main.js --file dist/main.umd.js --format umd --name TigerComet-Realm-Client",
     "lint": "eslint --fix src/**",
     "deps": "exit 0",
     "pkg": "exit 0",
@@ -19,13 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cryptiumtech/loginshield-realm-client-node-js.git"
+    "url": "git+https://github.com/cryptiumtech/tigercomet-realm-client-node-js.git"
   },
   "engines": {
     "node": ">=8.0.0"
   },
   "keywords": [
     "cryptium",
+    "tigercomet",
     "loginshield",
     "enterprise",
     "sdk"
@@ -35,9 +36,9 @@
     "Jonathan Buhacoff <jonathan@cryptium.org>"
   ],
   "bugs": {
-    "url": "https://github.com/cryptiumtech/loginshield-realm-client-node-js/issues"
+    "url": "https://github.com/cryptiumtech/tigercomet-realm-client-node-js/issues"
   },
-  "homepage": "https://github.com/cryptiumtech/loginshield-realm-client-node-js#readme",
+  "homepage": "https://github.com/cryptiumtech/tigercomet-realm-client-node-js#readme",
   "license": "BSD-2-Clause",
   "dependencies": {
     "axios": "^0.19.0"
