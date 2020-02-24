@@ -4,7 +4,7 @@ Copyright (C) 2019 Cryptium Corporation. All rights reserved.
 
 const ajax = require('axios');
 
-class LoginShield {
+class RealmClient {
     constructor({ endpointURL, realmId, authorizationToken } = {}) {
         this.endpointURL = endpointURL || process.env.LOGINSHIELD_ENDPOINT_URL;
         this.realmId = realmId || process.env.LOGINSHIELD_REALM_ID;
@@ -197,4 +197,4 @@ class LoginShield {
     }
 }
 
-export { LoginShield };
+export { RealmClient };
