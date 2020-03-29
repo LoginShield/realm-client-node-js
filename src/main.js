@@ -22,10 +22,11 @@ class RealmClient {
      * `realmScopedUserId`: how LoginShield should identify the user for this authentication realm
      * `name`: the user's display name
      * `email`: the user's email address
+     * `replace`: optional, if true the service will replace any existing realmScopedUserId record instead of returning a conflict error
      * @param {*} param0
      */
     async createRealmUser({
-        realmScopedUserId, name, email,
+        realmScopedUserId, name, email, replace,
     }) {
         try {
             const request = {
@@ -33,6 +34,7 @@ class RealmClient {
                 realmScopedUserId,
                 name,
                 email,
+                replace,
             };
             console.log('createRealmUser request: %o', request);
             const headers = {
@@ -56,7 +58,13 @@ class RealmClient {
             }
             return { error: 'unexpected-response', response }; // { isCreated: false, fault }
         } catch (err) {
-            console.log('createRealmUser error', err);
+            // console.log('createRealmUser error', err);
+            if (err.response) {
+                console.log('createRealmUser response status: %o', err.response.status);
+                console.log('createRealmUser response status text: %o', err.response.statusText);
+                console.log('createRealmUser response headers: %o', err.response.headers);
+                console.log('createRealmUser response data: %o', err.response.data);
+            }
             return { error: 'registration-failed', err };
         }
     }
