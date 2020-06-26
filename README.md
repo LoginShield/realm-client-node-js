@@ -1,9 +1,14 @@
-loginshield-realm-client-node-js
-================================
+realm-client-node-js
+====================
 
-Use the LoginShield Realm Client to manage and authenticate users with LoginShield
+Back-end part of LoginShield SDK for direct integration into a web application.
 
-Build:
+This library integrates into the website back-end JavaScript using NodeJS.
+
+Use the LoginShield Realm Client in this library to connect to the LoginShield
+service for user management and authentication.
+
+# Build
 
 ```
 npm run lint
