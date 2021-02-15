@@ -40,7 +40,7 @@
   "homepage": "https://github.com/loginshield/realm-client-node-js#readme",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "axios": "^0.21.0"
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
