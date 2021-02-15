@@ -2,13 +2,113 @@
 Copyright (C) 2019 Cryptium Corporation. All rights reserved.
 */
 
+import { HttpException } from './HttpException';
+
 const ajax = require('axios');
 
+/**
+ * Encapsulates requests to the LoginShield Realm API.
+ */
 class RealmClient {
-    constructor({ endpointURL, realmId, authorizationToken } = {}) {
+    constructor({
+        endpointURL, realmId, authorizationToken, requestHeaders,
+    } = {}) {
         this.endpointURL = endpointURL || process.env.LOGINSHIELD_ENDPOINT_URL;
         this.realmId = realmId || process.env.LOGINSHIELD_REALM_ID;
-        this.authorizationToken = authorizationToken || process.env.LOGINSHIELD_AUTHORIZATION_TOKEN;
+
+        if (typeof authorizationToken === 'string') {
+            this.authorizationHeader = () => ({
+                Authorization: `Token ${authorizationToken}`,
+            });
+        } else if (typeof process.env.LOGINSHIELD_AUTHORIZATION_TOKEN === 'string') {
+            this.authorizationHeader = () => ({
+                Authorization: `Token ${authorizationToken}`,
+            });
+        } else {
+            this.authorizationHeader = () => ({});
+        }
+
+        if (typeof requestHeaders === 'function') {
+            this.requestHeaders = requestHeaders;
+        } else if (typeof requestHeaders === 'object') {
+            const copy = { ...requestHeaders };
+            this.requestHeaders = () => copy;
+        } else {
+            this.requestHeaders = () => ({});
+        }
+
+        this.computeRequestHeaders = async (url) => {
+            const authorization = await this.authorizationHeader();
+            const request = await this.requestHeaders(url);
+            return {
+                ...authorization,
+                ...request,
+            };
+        };
+    }
+
+    /**
+     * If the request is denied, an exception will be thrown. The exception object
+     * will have a `response` property which is an object like `{ status, statusText, headers, data }`.
+     *
+     * @param {*} id
+     */
+    async getRealmInfoById(id) {
+        try {
+            console.log('getRealmInfoById id: %s', id);
+            const requestHeadersResult = await this.computeRequestHeaders(`${this.endpointURL}/service/realm`);
+            const headers = {
+                ...requestHeadersResult,
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            };
+            const response = await ajax.get(
+                `${this.endpointURL}/service/realm`,
+                {
+                    headers,
+                    params: { id },
+                },
+            );
+            return response.data;
+        } catch (err) {
+            if (err.response) {
+                throw new HttpException(err.response);
+            }
+            console.log('getRealmInfoById unknown error', err);
+            throw err;
+        }
+    }
+
+    /**
+     * If the request is denied, an exception will be thrown. The exception object
+     * will have a `response` property which is an object like `{ status, statusText, headers, data }`.
+     *
+     * @param {*} uri
+     */
+    async getRealmInfoByURI(uri) {
+        try {
+            console.log('getRealmInfoByURI: %s', uri);
+            const requestHeadersResult = await this.computeRequestHeaders(`${this.endpointURL}/service/realm`);
+            const headers = {
+                ...requestHeadersResult,
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            };
+            const response = await ajax.get(
+                `${this.endpointURL}/service/realm`,
+                {
+                    headers,
+                    params: { uri },
+                },
+            );
+            return response.data;
+        } catch (err) {
+            if (err.response) {
+                throw new HttpException(err.response);
+            }
+            console.log('getRealmInfoByURI unknown error', err);
+            throw err;
+        }
     }
 
     /**
@@ -37,8 +137,9 @@ class RealmClient {
                 replace,
             };
             console.log('createRealmUser request: %o', request);
+            const requestHeadersResult = await this.computeRequestHeaders(`${this.endpointURL}/service/realm/user/create`);
             const headers = {
-                Authorization: `Token ${this.authorizationToken}`,
+                ...requestHeadersResult,
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
             };
@@ -94,8 +195,9 @@ class RealmClient {
                 redirect,
             };
             console.log('createRealmUser request: %o', request);
+            const requestHeadersResult = await this.computeRequestHeaders(`${this.endpointURL}/service/realm/user/create`);
             const headers = {
-                Authorization: `Token ${this.authorizationToken}`,
+                ...requestHeadersResult,
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
             };
@@ -129,8 +231,9 @@ class RealmClient {
                 redirect, // this url only used for safety reset; when called, a 'loginshield' parameter will be added by loginshield
             };
             console.log('startLogin request: %o', request);
+            const requestHeadersResult = await this.computeRequestHeaders(`${this.endpointURL}/service/realm/login/start`);
             const headers = {
-                Authorization: `Token ${this.authorizationToken}`,
+                ...requestHeadersResult,
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
             };
@@ -161,8 +264,9 @@ class RealmClient {
                 token,
             };
             console.log('verifyLogin request: %o', request);
+            const requestHeadersResult = await this.computeRequestHeaders(`${this.endpointURL}/service/realm/login/verify`);
             const headers = {
-                Authorization: `Token ${this.authorizationToken}`,
+                ...requestHeadersResult,
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
             };
