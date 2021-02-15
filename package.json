@@ -1,6 +1,6 @@
 {
   "name": "@loginshield/realm-client-node",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Service integration for authentication realm",
   "main": "dist/main.umd.js",
   "module": "src/main",
